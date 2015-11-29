@@ -14,7 +14,9 @@ import io.dropwizard.Application;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
 import pl.devcrowd.chicken.configuration.DbIncludedConfiguration;
+import pl.devcrowd.chicken.dao.PresentationDao;
 import pl.devcrowd.chicken.dao.SpeakerDao;
+import pl.devcrowd.chicken.service.ProposalService;
 import pl.devcrowd.chicken.service.SpeakerService;
 
 public class SuperChicken extends Application<DbIncludedConfiguration> {
@@ -38,7 +40,9 @@ public class SuperChicken extends Application<DbIncludedConfiguration> {
             @Override
             protected void configure() {
             	bind(jdbi.onDemand(SpeakerDao.class)).to(SpeakerDao.class);
+            	bind(jdbi.onDemand(PresentationDao.class)).to(PresentationDao.class);
             	bind(SpeakerService.class).to(SpeakerService.class);
+            	bind(ProposalService.class).to(ProposalService.class);
             }
 		});
 		environment.jersey().register(MultiPartFeature.class);
