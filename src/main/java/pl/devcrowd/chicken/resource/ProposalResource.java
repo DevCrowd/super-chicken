@@ -31,8 +31,7 @@ public class ProposalResource {
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getProposals() {
-		service.getProposals();
-		return null;
+		return Response.ok().entity(service.getProposals()).build();
 	}
 
 	@GET
