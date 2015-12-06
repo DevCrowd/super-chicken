@@ -55,7 +55,7 @@ public class ProposalService {
 	private Speaker addSpeaker(Speaker speaker) {
 		speaker.setId(UUID.randomUUID().toString());
 
-		speakerDao.insert(speaker.getId(), speaker.getFirstname(), speaker.getLastname(), speaker.getDescription(),
+		speakerDao.insert(speaker.getId(), speaker.getFirstname(), speaker.getLastname(), speaker.getEmail(), speaker.getDescription(),
 				speaker.getPicture(), speaker.getTeeSize().value(), speaker.getOrigin());
 
 		return speaker;

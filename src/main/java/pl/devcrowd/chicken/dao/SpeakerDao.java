@@ -10,19 +10,20 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import pl.devcrowd.chicken.model.Speaker;
 
 public interface SpeakerDao {
-	@SqlUpdate("insert into speakers values (:id, :name, :surname, :description, :picture, :teeSize, :origin)")
-	void insert(@Bind("id") String id, @Bind("name") String name, @Bind("surname") String surname, @Bind("description") String description,
-			@Bind("picture") String picture, @Bind("teeSize") String teeSize, @Bind("origin") String origin);
+	@SqlUpdate("insert into speakers values (:id, :name, :surname, :email, :description, :picture, :teeSize, :origin)")
+	void insert(@Bind("id") String id, @Bind("name") String name, @Bind("surname") String surname, @Bind("email") String email,
+			@Bind("description") String description, @Bind("picture") String picture, @Bind("teeSize") String teeSize, @Bind("origin") String origin);
 
-	@SqlQuery("select id, name, surname, description, picture, tee_size, origin from speakers")
+	@SqlQuery("select id, name, surname, email, description, picture, tee_size, origin from speakers")
 	@Mapper(SpeakerMapper.class)
 	List<Speaker> getSpeakers();
 
-	@SqlQuery("select id, name, surname, description, picture, tee_size, origin from speakers where id = :id")
+	@SqlQuery("select id, name, surname, email, description, picture, tee_size, origin from speakers where id = :id")
 	@Mapper(SpeakerMapper.class)
 	Speaker getSpeakerById(@Bind("id") String id);
 
-	@SqlQuery("select id, name, surname, description, picture, tee_size, origin from speakers where id = any(select speaker_id from speaker_presentation where presentation_id = :presentationId)")
+	@SqlQuery("select id, name, surname, email, description, picture, tee_size, origin from speakers where " +
+			"id = any(select speaker_id from speaker_presentation where presentation_id = :presentationId)")
 	@Mapper(SpeakerMapper.class)
 	List<Speaker> getSpeakersForPresentation(@Bind("presentationId") String presentationId);
 }

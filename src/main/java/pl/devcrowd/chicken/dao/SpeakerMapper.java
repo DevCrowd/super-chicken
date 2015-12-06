@@ -18,6 +18,7 @@ public class SpeakerMapper implements ResultSetMapper<Speaker> {
 		result.setId(r.getString("id"));
 		result.setFirstname(r.getString("name"));
 		result.setLastname(r.getString("surname"));
+		result.setEmail(r.getString("email"));
 		result.setDescription(r.getString("description"));
 		result.setOrigin(r.getString("origin"));
 		result.setPicture(r.getString("picture"));

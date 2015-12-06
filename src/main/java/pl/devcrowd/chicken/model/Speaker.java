@@ -4,6 +4,7 @@ public class Speaker {
 	private String id;
 	private String firstname;
 	private String lastname;
+	private String email;
 	private String description;
 	private String picture;
 	private TeeSize teeSize;
@@ -63,6 +64,14 @@ public class Speaker {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public static enum TeeSize {
