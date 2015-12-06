@@ -6,8 +6,29 @@
             name VARCHAR(25) NOT NULL,
             surname VARCHAR(25) NOT NULL,
             description VARCHAR(2000) NOT NULL,
-            photo VARBINARY
+            picture VARCHAR(5000),
+            teeSize VARCHAR(3),
+            origin VARCHAR(256)
         );
+        
+        create table presentation(
+            id VARCHAR(50) PRIMARY KEY,
+            title VARCHAR(25) NOT NULL,
+            description VARCHAR(25) NOT NULL,
+            votes INTEGER NOT NULL default 0
+        );
+        
+        create table speaker_presentation(
+            speaker_id VARCHAR(50),
+            presentation_id VARCHAR(50)
+        );
+        
+        CREATE OR REPLACE FUNCTION vote(in int, in int) RETURNS integer AS $$
+        BEGIN
+                UPDATE presentation SET votes = votes + $2 WHERE id = $1;
+                RETURN null;
+        END;
+        $$ LANGUAGE plpgsql;
         </sql>
     </changeSet>
 </databaseChangeLog>

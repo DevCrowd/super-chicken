@@ -8,7 +8,7 @@ public interface PresentationDao {
 	@SqlUpdate("insert into presentaion values (:id, :title, :description, :votes)")
 	void insert(@Bind("id") String id, @Bind("title") String title, @Bind("description") String description, @Bind("votes") int votes);
 
-	@SqlUpdate("insert into presentation_speaker_relation values (:presentationId, :speakerId)")
+	@SqlUpdate("insert into speaker_presentation values (:speakerId, :presentationId)")
 	void insertSpeakerRelation(@Bind("presentationId") String presentationId, @Bind("speakerId") String speakerId);
 
 	@SqlCall("vote(:id, :vote)")
