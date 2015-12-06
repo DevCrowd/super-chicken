@@ -16,6 +16,7 @@ import io.dropwizard.setup.Environment;
 import pl.devcrowd.chicken.configuration.DbIncludedConfiguration;
 import pl.devcrowd.chicken.dao.PresentationDao;
 import pl.devcrowd.chicken.dao.SpeakerDao;
+import pl.devcrowd.chicken.service.PresentationService;
 import pl.devcrowd.chicken.service.ProposalService;
 import pl.devcrowd.chicken.service.SpeakerService;
 
@@ -43,6 +44,7 @@ public class SuperChicken extends Application<DbIncludedConfiguration> {
             	bind(jdbi.onDemand(PresentationDao.class)).to(PresentationDao.class);
             	bind(SpeakerService.class).to(SpeakerService.class);
             	bind(ProposalService.class).to(ProposalService.class);
+            	bind(PresentationService.class).to(PresentationService.class);
             }
 		});
 		environment.jersey().register(MultiPartFeature.class);
