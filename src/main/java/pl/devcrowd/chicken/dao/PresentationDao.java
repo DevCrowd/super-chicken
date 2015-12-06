@@ -29,6 +29,10 @@ public interface PresentationDao {
 	@Mapper(PresentationMapper.class)
 	Presentation getRandomPresentation();
 
+	@SqlQuery("select id, title, description, votes from presentations order by votes limit :count")
+	@Mapper(PresentationMapper.class)
+	List<Presentation> getSelectedPresentations(@Bind("count") int count);
+
 	@SqlCall("vote(:id, :vote)")
 	void vote(String id, String vote);
 }

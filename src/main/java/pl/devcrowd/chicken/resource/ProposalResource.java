@@ -3,11 +3,13 @@ package pl.devcrowd.chicken.resource;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -38,6 +40,13 @@ public class ProposalResource {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getRandomProposal() {
 		return Response.ok().entity(service.getRandomProposal()).build();
+	}
+
+	@GET
+	@Path("/selected")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getSelectedProposals(@QueryParam("count") @DefaultValue("10") int count) {
+		return Response.ok().entity(service.getSelectedProposals(count)).build();
 	}
 
 	@GET

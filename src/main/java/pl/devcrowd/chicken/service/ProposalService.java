@@ -37,6 +37,12 @@ public class ProposalService {
 		return new Proposal(speakers, Arrays.asList(randomPresentation));
 	}
 
+	public List<Proposal> getSelectedProposals(int count) {
+		return presentationDao.getSelectedPresentations(count).stream()
+			.map(p -> new Proposal(speakerDao.getSpeakersForPresentation(p.getId()), Arrays.asList(p)))
+			.collect(Collectors.toList());
+	}
+
 	private Speaker addSpeaker(Speaker speaker) {
 		speaker.setId(UUID.randomUUID().toString());
 
