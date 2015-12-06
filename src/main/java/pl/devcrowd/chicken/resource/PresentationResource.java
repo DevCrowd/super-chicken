@@ -20,7 +20,7 @@ public class PresentationResource {
 	@POST
 	@Path("/{id}/votes")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addVote(@PathParam("id") long id, String vote) {
+	public Response addVote(@PathParam("id") String id, String vote) {
 		service.vote(id, vote);
 
 		return Response.ok().build();

@@ -27,6 +27,20 @@ public class ProposalResource {
 	}
 
 	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getProposals() {
+		service.getProposals();
+		return null;
+	}
+
+	@GET
+	@Path("/random")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getRandomProposal() {
+		return Response.ok().entity(service.getRandomProposal()).build();
+	}
+
+	@GET
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getProposal(@PathParam("id") Long id) {

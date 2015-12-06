@@ -1,7 +1,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog/1.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog/1.9 http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-1.9.xsd">
     <changeSet id="speaker" author="spc">
         <sql>
-        create table speaker(
+        create table speakers(
             id VARCHAR(50) PRIMARY KEY,
             name VARCHAR(25) NOT NULL,
             surname VARCHAR(25) NOT NULL,
@@ -11,7 +11,7 @@
             origin VARCHAR(256)
         );
         
-        create table presentation(
+        create table presentations(
             id VARCHAR(50) PRIMARY KEY,
             title VARCHAR(25) NOT NULL,
             description VARCHAR(25) NOT NULL,

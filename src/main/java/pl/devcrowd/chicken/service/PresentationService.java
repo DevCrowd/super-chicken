@@ -8,7 +8,7 @@ public class PresentationService {
 	@Inject
 	private PresentationDao dao;
 
-	public void vote(long id, String vote) {
+	public void vote(String id, String vote) {
 		if (isProperValue(vote)) {
 			dao.vote(id, vote);
 		} else {

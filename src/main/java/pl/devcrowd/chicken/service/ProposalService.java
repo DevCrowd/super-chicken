@@ -1,5 +1,6 @@
 package pl.devcrowd.chicken.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -24,6 +25,16 @@ public class ProposalService {
 
 
 		return new Proposal(speakers, presentations);
+	}
+
+	public void getProposals() {
+	}
+
+	public Proposal getRandomProposal() {
+		Presentation randomPresentation = presentationDao.getRandomPresentation();
+		List<Speaker> speakers = speakerDao.getSpeakersForPresentation(randomPresentation.getId());
+
+		return new Proposal(speakers, Arrays.asList(randomPresentation));
 	}
 
 	private Speaker addSpeaker(Speaker speaker) {
