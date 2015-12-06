@@ -7,6 +7,9 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
+import org.skife.jdbi.v2.TransactionIsolationLevel;
+import org.skife.jdbi.v2.sqlobject.Transaction;
+
 import pl.devcrowd.chicken.dao.PresentationDao;
 import pl.devcrowd.chicken.dao.SpeakerDao;
 import pl.devcrowd.chicken.model.Presentation;
@@ -19,6 +22,7 @@ public class ProposalService {
 	@Inject
 	private PresentationDao presentationDao;
 
+	@Transaction
 	public Proposal addProposal(Proposal proposal) {
 		List<Speaker> speakers = proposal.getSpeakers().stream().map(this::addSpeaker).collect(Collectors.toList());
 		List<Presentation> presentations = proposal.getPresenations().stream().map((p) -> addPresentation(p, speakers)).collect(Collectors.toList());
@@ -26,12 +30,14 @@ public class ProposalService {
 		return new Proposal(speakers, presentations);
 	}
 
+	@Transaction(TransactionIsolationLevel.REPEATABLE_READ)
 	public List<Proposal> getProposals() {
 		return presentationDao.getPresentations().stream()
 				.map(p -> new Proposal(speakerDao.getSpeakersForPresentation(p.getId()), Arrays.asList(p)))
 				.collect(Collectors.toList());
 	}
 
+	@Transaction(TransactionIsolationLevel.REPEATABLE_READ)
 	public Proposal getRandomProposal() {
 		Presentation randomPresentation = presentationDao.getRandomPresentation();
 		List<Speaker> speakers = speakerDao.getSpeakersForPresentation(randomPresentation.getId());
@@ -39,6 +45,7 @@ public class ProposalService {
 		return new Proposal(speakers, Arrays.asList(randomPresentation));
 	}
 
+	@Transaction(TransactionIsolationLevel.REPEATABLE_READ)
 	public List<Proposal> getSelectedProposals(int count) {
 		return presentationDao.getSelectedPresentations(count).stream()
 			.map(p -> new Proposal(speakerDao.getSpeakersForPresentation(p.getId()), Arrays.asList(p)))
