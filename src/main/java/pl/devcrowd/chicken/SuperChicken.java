@@ -7,15 +7,20 @@ import javax.servlet.FilterRegistration;
 
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.hk2.utilities.binding.AbstractBinder;
-import org.glassfish.jersey.media.multipart.MultiPartFeature;
+import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 import org.skife.jdbi.v2.DBI;
 
 import io.dropwizard.Application;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
 import pl.devcrowd.chicken.configuration.DbIncludedConfiguration;
 import pl.devcrowd.chicken.dao.PresentationDao;
 import pl.devcrowd.chicken.dao.SpeakerDao;
+import pl.devcrowd.chicken.security.SimpleAuthenticator;
+import pl.devcrowd.chicken.security.SimpleAuthorizer;
+import pl.devcrowd.chicken.security.User;
 import pl.devcrowd.chicken.service.PresentationService;
 import pl.devcrowd.chicken.service.ProposalService;
 import pl.devcrowd.chicken.service.SpeakerService;
@@ -47,9 +52,20 @@ public class SuperChicken extends Application<DbIncludedConfiguration> {
             	bind(PresentationService.class).to(PresentationService.class);
             }
 		});
-		environment.jersey().register(MultiPartFeature.class);
 
         configureCrossOriginFilter(environment.servlets().addFilter("CORS", CrossOriginFilter.class));
+
+        configureBasicSecurity(environment);
+	}
+
+	private void configureBasicSecurity(Environment environment) {
+		environment.jersey().register(new AuthDynamicFeature(
+			new BasicCredentialAuthFilter.Builder<User>()
+				.setAuthenticator(new SimpleAuthenticator())
+				.setAuthorizer(new SimpleAuthorizer())
+				.setRealm("SUPER SECRET STUFF")
+				.buildAuthFilter()));
+		environment.jersey().register(RolesAllowedDynamicFeature.class);
 	}
 
 	private void configureCrossOriginFilter(FilterRegistration.Dynamic filter) {

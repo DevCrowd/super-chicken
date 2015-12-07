@@ -1,5 +1,7 @@
 package pl.devcrowd.chicken.resource;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import javax.ws.rs.Consumes;
@@ -22,18 +24,21 @@ public class ProposalResource {
 	@Inject
 	private ProposalService service;
 
+	@PermitAll
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addProposal(@Valid Proposal proposal) {
 		return Response.created(null).entity(service.addProposal(proposal)).build();
 	}
 
+	@PermitAll
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getProposals() {
 		return Response.ok().entity(service.getProposals()).build();
 	}
 
+	@PermitAll
 	@GET
 	@Path("/random")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -41,6 +46,7 @@ public class ProposalResource {
 		return Response.ok().entity(service.getRandomProposal()).build();
 	}
 
+	@RolesAllowed("ADMIN")
 	@GET
 	@Path("/selected")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -48,6 +54,7 @@ public class ProposalResource {
 		return Response.ok().entity(service.getSelectedProposals(count)).build();
 	}
 
+	@PermitAll
 	@GET
 	@Path("/{id}")
 	@Consumes(MediaType.APPLICATION_JSON)
