@@ -29,8 +29,8 @@ public interface PresentationDao {
 	@Mapper(PresentationMapper.class)
 	Presentation getRandomPresentation();
 
-	@SqlQuery("select p.id as id, p.title as title, p.description as description from presentations p left outer join votes v order by v.votes limit :count")
-	@Mapper(PresentationMapper.class)
+	@SqlQuery("select p.id as id, p.title as title, p.description as description, v.votes as votes from presentations p left outer join votes v order by v.votes limit :count")
+	@Mapper(PresentationWithVotesMapper.class)
 	List<Presentation> getSelectedPresentations(@Bind("count") int count);
 
 	@SqlCall("vote(:id, :vote)")
