@@ -15,8 +15,7 @@
         create table presentations(
             id VARCHAR(50) PRIMARY KEY,
             title VARCHAR(25) NOT NULL,
-            description VARCHAR(25) NOT NULL,
-            votes INTEGER NOT NULL default 0
+            description VARCHAR(25) NOT NULL
         );
         
         create table speaker_presentation(
@@ -24,10 +23,20 @@
             presentation_id VARCHAR(50)
         );
         
+        create table votes(
+            presentation_id VARCHAR(50),
+            votes INTEGER NOT NULL default 0
+        );
+        
         CREATE OR REPLACE FUNCTION vote(in int, in int) RETURNS integer AS $$
         BEGIN
-                UPDATE presentation SET votes = votes + $2 WHERE id = $1;
-                RETURN null;
+            IF NOT EXISTS (SELECT 1 FROM votes WHERE presentation_id = $1) THEN
+                INSERT INTO votes VALUES ($1, $2);
+	        ELSE
+	           UPDATE votes SET votes = votes + $2 WHERE presentation_id = $1;
+	        END IF;
+                
+            RETURN null;
         END;
         $$ LANGUAGE plpgsql;
         </sql>

@@ -17,7 +17,6 @@ public class PresentationMapper implements ResultSetMapper<Presentation> {
 		result.setId(r.getString("id"));
 		result.setTitle(r.getString("title"));
 		result.setDescription(r.getString("description"));
-		result.setVotes(r.getInt("votes"));
 
 		return result;
 	}

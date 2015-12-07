@@ -11,25 +11,25 @@ import org.skife.jdbi.v2.sqlobject.customizers.Mapper;
 import pl.devcrowd.chicken.model.Presentation;
 
 public interface PresentationDao {
-	@SqlUpdate("insert into presentaions values (:id, :title, :description, :votes)")
-	void insert(@Bind("id") String id, @Bind("title") String title, @Bind("description") String description, @Bind("votes") int votes);
+	@SqlUpdate("insert into presentaions values (:id, :title, :description)")
+	void insert(@Bind("id") String id, @Bind("title") String title, @Bind("description") String description);
 
 	@SqlUpdate("insert into speaker_presentation values (:speakerId, :presentationId)")
 	void insertSpeakerRelation(@Bind("presentationId") String presentationId, @Bind("speakerId") String speakerId);
 
-	@SqlQuery("select id, title, description, votes from presentations")
+	@SqlQuery("select id, title, description from presentations")
 	@Mapper(PresentationMapper.class)
 	List<Presentation> getPresentations();
 
-	@SqlQuery("select id, title, description, votes from presentations where id = :id")
+	@SqlQuery("select id, title, description from presentations where id = :id")
 	@Mapper(PresentationMapper.class)
 	Presentation getPresentationById(@Bind("id") String id);
 
-	@SqlQuery("select id, title, description, votes from presentations order by random() limit 1")
+	@SqlQuery("select id, title, description from presentations order by random() limit 1")
 	@Mapper(PresentationMapper.class)
 	Presentation getRandomPresentation();
 
-	@SqlQuery("select id, title, description, votes from presentations order by votes limit :count")
+	@SqlQuery("select p.id as id, p.title as title, p.description as description from presentations p left outer join votes v order by v.votes limit :count")
 	@Mapper(PresentationMapper.class)
 	List<Presentation> getSelectedPresentations(@Bind("count") int count);
 
