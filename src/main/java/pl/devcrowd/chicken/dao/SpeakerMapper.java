@@ -10,7 +10,6 @@ import pl.devcrowd.chicken.model.Speaker;
 import pl.devcrowd.chicken.model.Speaker.TeeSize;
 
 public class SpeakerMapper implements ResultSetMapper<Speaker> {
-
 	@Override
 	public Speaker map(int index, ResultSet r, StatementContext ctx) throws SQLException {
 		Speaker result = new Speaker();
@@ -26,5 +25,4 @@ public class SpeakerMapper implements ResultSetMapper<Speaker> {
 
 		return result;
 	}
-
 }

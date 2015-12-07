@@ -11,7 +11,7 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
 
 	@Override
 	public Optional<User> authenticate(BasicCredentials credentials) throws AuthenticationException {
-		if (System.getenv().getOrDefault(SYSTEM_PASSWORD_VARIABLE_NAME, "").equals(credentials.getPassword())) {
+		if (System.getenv().get(SYSTEM_PASSWORD_VARIABLE_NAME).equals(credentials.getPassword())) {
 			return Optional.of(new User(credentials.getUsername()));
 		}
 
