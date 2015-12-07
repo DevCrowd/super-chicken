@@ -34,9 +34,9 @@ liquibase {
 	activities {
 	  main {
 		changeLogFile 'db/changelog.xml'
-		url System.getenv().getOrDefault('DB_URL', 'jdbc:postgresql://localhost:5432/postgres')
-		username System.getenv().getOrDefault('DB_USERNAME', 'postgres')
-		password System.getenv().getOrDefault('DB_PASSWD', '')
+		url System.getenv().getOrDefault('DB_URL', 'jdbc:postgresql://localhost:5432/test')
+		username System.getenv().getOrDefault('DB_USERNAME', 'test')
+		password System.getenv().getOrDefault('DB_PASSWD', 'test')
 	  }
 	}
   }

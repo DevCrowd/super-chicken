@@ -1,5 +1,6 @@
 package pl.devcrowd.chicken.resource;
 
+import javax.annotation.security.PermitAll;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
@@ -17,6 +18,7 @@ public class PresentationResource {
 	@Inject
 	private PresentationService service;
 
+	@PermitAll
 	@POST
 	@Path("/{id}/votes")
 	@Consumes(MediaType.APPLICATION_JSON)
