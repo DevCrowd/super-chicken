@@ -1,4 +1,6 @@
 chicken:
   image: postgres
   ports:
-   - "5435:5432"
+   - "5432:5432"
+  POSTGRES_PASSWORD: test
+  POSTGRES_USER: test
