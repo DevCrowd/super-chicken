@@ -1,12 +1,16 @@
 package pl.devcrowd.chicken.model;
 
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(value = Include.NON_NULL)
 public class Presentation {
 	private String id;
+	@NotBlank
 	private String title;
+	@NotBlank
 	private String description;
 	private int votes;
 

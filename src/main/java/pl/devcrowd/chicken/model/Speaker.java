@@ -1,16 +1,25 @@
 package pl.devcrowd.chicken.model;
 
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @JsonInclude(value = Include.NON_NULL)
 public class Speaker {
 	private String id;
+	@NotBlank
 	private String firstname;
+	@NotBlank
 	private String lastname;
+	@NotBlank
+	@Email
 	private String email;
+	@NotBlank
 	private String description;
 	private String picture;
+	@NotBlank
 	private TeeSize teeSize;
 	private String origin;
 

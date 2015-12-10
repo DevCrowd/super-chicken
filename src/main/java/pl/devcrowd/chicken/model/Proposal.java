@@ -2,8 +2,12 @@ package pl.devcrowd.chicken.model;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 public class Proposal {
+	@Valid
 	private List<Speaker> speakers;
+	@Valid
 	private List<Presentation> presenations;
 
 	public Proposal() {}
