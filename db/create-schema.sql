@@ -12,7 +12,8 @@ create table speakers(
 create table presentations(
     id VARCHAR(50) PRIMARY KEY,
     title VARCHAR(25) NOT NULL,
-    description VARCHAR(25) NOT NULL
+    description VARCHAR(25) NOT NULL,
+    language VARCHAR(3) NOT NULL
 );
 
 create table speaker_presentation(

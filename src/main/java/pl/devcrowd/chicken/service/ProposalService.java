@@ -65,7 +65,7 @@ public class ProposalService {
 		String id = UUID.randomUUID().toString();
 		presentation.setId(id);
 
-		presentationDao.insert(id, presentation.getTitle(), presentation.getDescription());
+		presentationDao.insert(id, presentation.getTitle(), presentation.getDescription(), presentation.getLanguage().value());
 		speakers.forEach(s -> presentationDao.insertSpeakerRelation(id, s.getId()));
 
 		return presentation;

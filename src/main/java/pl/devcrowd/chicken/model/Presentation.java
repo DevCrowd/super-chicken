@@ -12,6 +12,8 @@ public class Presentation {
 	private String title;
 	@NotBlank
 	private String description;
+	@NotBlank
+	private Language language;
 	private int votes;
 
 	public String getId() {
@@ -44,5 +46,25 @@ public class Presentation {
 
 	public void setVotes(int votes) {
 		this.votes = votes;
+	}
+
+	public Language getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(Language language) {
+		this.language = language;
+	}
+
+	public static enum Language {
+		PL("PL"),
+		ENG("ENG");
+		private String value;
+		private Language(String value) {
+			this.value = value;
+		}
+		public String value() {
+			return value;
+		}
 	}
 }

@@ -7,6 +7,7 @@ import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
 import pl.devcrowd.chicken.model.Presentation;
+import pl.devcrowd.chicken.model.Presentation.Language;
 
 public class PresentationMapper implements ResultSetMapper<Presentation> {
 	@Override
@@ -16,6 +17,7 @@ public class PresentationMapper implements ResultSetMapper<Presentation> {
 		result.setId(r.getString("id"));
 		result.setTitle(r.getString("title"));
 		result.setDescription(r.getString("description"));
+		result.setLanguage(Language.valueOf(r.getString("language")));
 
 		return result;
 	}
