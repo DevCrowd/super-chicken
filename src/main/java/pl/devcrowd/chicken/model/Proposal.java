@@ -8,21 +8,13 @@ public class Proposal {
 	@Valid
 	private List<Speaker> speakers;
 	@Valid
-	private List<Presentation> presenations;
+	private List<Presentation> presentations;
 
 	public Proposal() {}
 
-	public Proposal(List<Speaker> speakers, List<Presentation> presenations) {
+	public Proposal(List<Speaker> speakers, List<Presentation> presentations) {
 		this.speakers = speakers;
-		this.presenations = presenations;
-	}
-
-	public List<Presentation> getPresenations() {
-		return presenations;
-	}
-
-	public void setPresenations(List<Presentation> presenations) {
-		this.presenations = presenations;
+		this.presentations = presentations;
 	}
 
 	public List<Speaker> getSpeakers() {
@@ -31,5 +23,13 @@ public class Proposal {
 
 	public void setSpeakers(List<Speaker> speakers) {
 		this.speakers = speakers;
+	}
+
+	public List<Presentation> getPresentations() {
+		return presentations;
+	}
+
+	public void setPresentations(List<Presentation> presentations) {
+		this.presentations = presentations;
 	}
 }

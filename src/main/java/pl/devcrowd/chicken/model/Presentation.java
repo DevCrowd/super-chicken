@@ -12,7 +12,6 @@ public class Presentation {
 	private String title;
 	@NotBlank
 	private String description;
-	@NotBlank
 	private Language language;
 	private int votes;
 

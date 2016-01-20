@@ -19,7 +19,6 @@ public class Speaker {
 	@NotBlank
 	private String description;
 	private String picture;
-	@NotBlank
 	private TeeSize teeSize;
 	private String origin;
 

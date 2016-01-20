@@ -25,7 +25,7 @@ public class ProposalService {
 	@Transaction
 	public Proposal addProposal(Proposal proposal) {
 		List<Speaker> speakers = proposal.getSpeakers().stream().map(this::addSpeaker).collect(Collectors.toList());
-		List<Presentation> presentations = proposal.getPresenations().stream().map((p) -> addPresentation(p, speakers)).collect(Collectors.toList());
+		List<Presentation> presentations = proposal.getPresentations().stream().map((p) -> addPresentation(p, speakers)).collect(Collectors.toList());
 
 		return new Proposal(speakers, presentations);
 	}

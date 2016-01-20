@@ -4,7 +4,7 @@ create table speakers(
     surname VARCHAR(25) NOT NULL,
     email VARCHAR(50) NOT NULL,
     description VARCHAR(2000) NOT NULL,
-    picture VARCHAR(5000),
+    picture TEXT,
     teeSize VARCHAR(3),
     origin VARCHAR(256)
 );
