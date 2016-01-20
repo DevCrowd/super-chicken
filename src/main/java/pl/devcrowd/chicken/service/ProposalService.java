@@ -33,14 +33,14 @@ public class ProposalService {
 	@Transaction(TransactionIsolationLevel.REPEATABLE_READ)
 	public List<Proposal> getProposals() {
 		return presentationDao.getPresentations().stream()
-				.map(p -> new Proposal(speakerDao.getSpeakersForPresentation(p.getId()), Arrays.asList(p)))
+				.map(p -> new Proposal(speakerDao.getSimpleSpeakersForPresentation(p.getId()), Arrays.asList(p)))
 				.collect(Collectors.toList());
 	}
 
 	@Transaction(TransactionIsolationLevel.REPEATABLE_READ)
 	public Proposal getRandomProposal() {
 		Presentation randomPresentation = presentationDao.getRandomPresentation();
-		List<Speaker> speakers = speakerDao.getSpeakersForPresentation(randomPresentation.getId());
+		List<Speaker> speakers = speakerDao.getSimpleSpeakersForPresentation(randomPresentation.getId());
 
 		return new Proposal(speakers, Arrays.asList(randomPresentation));
 	}

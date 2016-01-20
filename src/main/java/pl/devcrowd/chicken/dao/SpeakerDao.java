@@ -14,16 +14,29 @@ public interface SpeakerDao {
 	void insert(@Bind("id") String id, @Bind("name") String name, @Bind("surname") String surname, @Bind("email") String email,
 			@Bind("description") String description, @Bind("picture") String picture, @Bind("teeSize") String teeSize, @Bind("origin") String origin);
 
-	@SqlQuery("select id, name, surname, email, description, picture, tee_size, origin from speakers")
+	@SqlQuery("select id, name, surname, description, picture from speakers")
 	@Mapper(SpeakerMapper.class)
+	List<Speaker> getSimpleSpeakers();
+
+	@SqlQuery("select id, name, surname, description, picture from speakers where id = :id")
+	@Mapper(SpeakerMapper.class)
+	Speaker getSimpleSpeakerById(@Bind("id") String id);
+
+	@SqlQuery("select id, name, surname, description, picture from speakers where " +
+			"id = any(select speaker_id from speaker_presentation where presentation_id = :presentationId)")
+	@Mapper(SpeakerMapper.class)
+	List<Speaker> getSimpleSpeakersForPresentation(@Bind("presentationId") String presentationId);
+
+	@SqlQuery("select id, name, surname, email, description, picture, tee_size, origin from speakers")
+	@Mapper(SpeakerWithAllDataMapper.class)
 	List<Speaker> getSpeakers();
 
 	@SqlQuery("select id, name, surname, email, description, picture, tee_size, origin from speakers where id = :id")
-	@Mapper(SpeakerMapper.class)
+	@Mapper(SpeakerWithAllDataMapper.class)
 	Speaker getSpeakerById(@Bind("id") String id);
 
 	@SqlQuery("select id, name, surname, email, description, picture, tee_size, origin from speakers where " +
 			"id = any(select speaker_id from speaker_presentation where presentation_id = :presentationId)")
-	@Mapper(SpeakerMapper.class)
+	@Mapper(SpeakerWithAllDataMapper.class)
 	List<Speaker> getSpeakersForPresentation(@Bind("presentationId") String presentationId);
 }
