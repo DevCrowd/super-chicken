@@ -2,6 +2,7 @@ package pl.devcrowd.chicken.resource;
 
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -24,5 +25,12 @@ public class PresentationResource {
 		service.vote(id, vote);
 
 		return Response.ok().build();
+	}
+
+	@GET
+	@Path("/count")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getPresentationsCount() {
+		return Response.ok(service.getPresentationsCount()).build();
 	}
 }

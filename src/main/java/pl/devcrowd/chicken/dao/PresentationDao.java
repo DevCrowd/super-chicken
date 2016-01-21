@@ -36,4 +36,7 @@ public interface PresentationDao {
 
 	@SqlCall("vote(:id, :vote)")
 	void vote(String id, String vote);
+
+	@SqlCall("select count(*) from presentations")
+	int getPresentationsCount();
 }

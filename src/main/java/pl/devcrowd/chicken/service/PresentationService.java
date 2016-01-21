@@ -27,4 +27,8 @@ public class PresentationService {
 			return false;
 		}
 	}
+
+	public int getPresentationsCount() {
+		return dao.getPresentationsCount();
+	}
 }
