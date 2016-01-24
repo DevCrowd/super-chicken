@@ -9,6 +9,11 @@ then
     rm -f gradle-2.6-bin.zip
 fi
 
-    wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u5-b13/jdk-8u5-linux-x64.tar.gztar -zxf jdk-8u5-linux-x64.tar.gz
+if [ ! -d $OPENSHIFT_DATA_DIR/jdk-8u5-linux-x64 ]
+then
+    cd $OPENSHIFT_DATA_DIR
+
+    wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u5-b13/jdk-8u5-linux-x64.tar.gz
     tar -zxf jdk-8u5-linux-x64.tar.gz
     rm -rf jdk-8u5-linux-x64.tar.gz
+fi
