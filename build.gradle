@@ -38,9 +38,9 @@ liquibase {
 	activities {
 	  main {
 		changeLogFile 'db/changelog.xml'
-		url 'jdbc:' + System.getenv().getOrDefault('OPENSHIFT_POSTGRESQL_DB_URL', 'postgresql://localhost:5432/test')
-		username System.getenv().getOrDefault('OPENSHIFT_POSTGRESQL_DB_USERNAME', 'test')
-		password System.getenv().getOrDefault('OPENSHIFT_POSTGRESQL_DB_PASSWORD', 'test')
+		url "jdbc:" + System.getenv().getOrDefault("OPENSHIFT_POSTGRESQL_DB_URL", "postgresql://localhost:5432/test")
+		username System.getenv().getOrDefault("OPENSHIFT_POSTGRESQL_DB_USERNAME", "test")
+		password System.getenv().getOrDefault("OPENSHIFT_POSTGRESQL_DB_PASSWORD", "test")
 	  }
 	}
   }
