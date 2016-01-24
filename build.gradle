@@ -60,7 +60,4 @@ shadowJar {
     baseName = 'super-chicken'
     version = ''
     classifier = 'all'
-    mergeServiceFiles()
-    exclude 'META-INF/*.DSA'
-    exclude 'META-INF/*.RSA'
 }
