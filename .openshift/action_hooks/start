@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd $OPENSHIFT_REPO_DIR
+
+sed -i 's/OPENSHIFT_POSTGRESQL_DB_USERNAME/'"$OPENSHIFT_POSTGRESQL_DB_USERNAME"'/g' env.yml
+sed -i 's/OPENSHIFT_POSTGRESQL_DB_PASSWORD/'"$OPENSHIFT_POSTGRESQL_DB_PASSWORD"'/g' env.yml
+sed -i 's/OPENSHIFT_POSTGRESQL_DB_URL/'"$OPENSHIFT_POSTGRESQL_DB_URL"'/g' env.yml
+
+java -jar build/libs/super-chicken-all.jar server env.yml

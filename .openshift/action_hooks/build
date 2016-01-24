@@ -1,0 +1,6 @@
+#!/bin/bash
+
+cd $OPENSHIFT_REPO_DIR
+
+./gradlew update
+./gradlew clean build shadowJar
