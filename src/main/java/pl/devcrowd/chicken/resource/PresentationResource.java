@@ -1,5 +1,6 @@
 package pl.devcrowd.chicken.resource;
 
+import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -25,6 +26,14 @@ public class PresentationResource {
 		service.vote(id, vote);
 
 		return Response.ok().build();
+	}
+
+	@RolesAllowed("ADMIN")
+	@GET
+	@Path("/full")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getFullPresentations() {
+		return Response.ok(service.getFullPresentations()).build();
 	}
 
 	@GET

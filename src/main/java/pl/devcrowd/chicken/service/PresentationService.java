@@ -1,8 +1,11 @@
 package pl.devcrowd.chicken.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import pl.devcrowd.chicken.dao.PresentationDao;
+import pl.devcrowd.chicken.model.Presentation;
 
 public class PresentationService {
 	@Inject
@@ -14,6 +17,10 @@ public class PresentationService {
 		} else {
 			throw new IllegalArgumentException("Unsupported value");
 		}
+	}
+
+	public List<Presentation> getFullPresentations() {
+		return dao.getFullPresentations();
 	}
 
 	private boolean isProperValue(String vote) {

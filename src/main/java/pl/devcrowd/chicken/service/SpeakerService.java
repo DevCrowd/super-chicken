@@ -24,6 +24,11 @@ public class SpeakerService {
 	}
 
 	@Transaction(TransactionIsolationLevel.REPEATABLE_READ)
+	public List<Speaker> getFullSpeakers() {
+		return dao.getSpeakers();
+	}
+
+	@Transaction(TransactionIsolationLevel.REPEATABLE_READ)
 	public List<Speaker> getSelectedSpeakers(int count) {
 		return presentationDao.getSelectedPresentations(count).stream()
 			.map(p -> dao.getSpeakersForPresentation(p.getId()))

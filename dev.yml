@@ -13,3 +13,8 @@ database:
   checkConnectionWhileIdle: false
   evictionInterval: 10s
   minIdleTime: 1 minute
+mail:
+  host: test.test.com
+  port: 465
+  registrationMailTemplate: "Cześć %s,<br><br>Dziękujemy za zgłoszenie prezentacji.<br>Twoje zgłoszenie zostało dodane do listy zgłoszonych prezentacji i weźmie udział w głosowaniu.<br><br>Zespół DevCrowd"
+  registrationMailSubject: "C4P DevCrowd"

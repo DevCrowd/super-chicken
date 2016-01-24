@@ -1,5 +1,7 @@
 package pl.devcrowd.chicken.model;
 
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -10,16 +12,20 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Speaker {
 	private String id;
 	@NotBlank
+	@Size(max=30)
 	private String firstname;
 	@NotBlank
+	@Size(max=30)
 	private String lastname;
 	@NotBlank
 	@Email
+	@Size(max=50)
 	private String email;
-	@NotBlank
+	@Size(max=500)
 	private String description;
 	private String picture;
 	private TeeSize teeSize;
+	@Size(max=100)
 	private String origin;
 
 	public String getId() {

@@ -15,17 +15,20 @@ import io.dropwizard.auth.AuthDynamicFeature;
 import io.dropwizard.auth.basic.BasicCredentialAuthFilter;
 import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
-import pl.devcrowd.chicken.configuration.DbIncludedConfiguration;
+import pl.devcrowd.chicken.configuration.MailConfiguration;
+import pl.devcrowd.chicken.configuration.SuperChickenConfiguration;
 import pl.devcrowd.chicken.dao.PresentationDao;
+import pl.devcrowd.chicken.dao.ProposalDao;
 import pl.devcrowd.chicken.dao.SpeakerDao;
 import pl.devcrowd.chicken.security.SimpleAuthenticator;
 import pl.devcrowd.chicken.security.SimpleAuthorizer;
 import pl.devcrowd.chicken.security.User;
+import pl.devcrowd.chicken.service.MailService;
 import pl.devcrowd.chicken.service.PresentationService;
 import pl.devcrowd.chicken.service.ProposalService;
 import pl.devcrowd.chicken.service.SpeakerService;
 
-public class SuperChicken extends Application<DbIncludedConfiguration> {
+public class SuperChicken extends Application<SuperChickenConfiguration> {
 	public static void main(String[] args) throws Exception {
         new SuperChicken().run(args);
     }
@@ -36,20 +39,27 @@ public class SuperChicken extends Application<DbIncludedConfiguration> {
     }
 
 	@Override
-	public void run(DbIncludedConfiguration configuration, Environment environment) throws Exception {
+	public void run(SuperChickenConfiguration configuration, Environment environment) throws Exception {
 		environment.jersey().packages("pl.devcrowd.chicken");
 
 		final DBIFactory factory = new DBIFactory();
 		final DBI jdbi = factory.build(environment, configuration.getDataSourceFactory(), "postgresql");
+
+		MailConfiguration mailConfiguration = configuration.getMail();
+		MailService mailService = new MailService(mailConfiguration.getHost(), mailConfiguration.getPort(),
+				System.getenv().getOrDefault("MAIL_SRV_USR", ""), System.getenv().getOrDefault("MAIL_SRV_PSSWD", ""));
 
 		environment.jersey().register(new AbstractBinder() {
             @Override
             protected void configure() {
             	bind(jdbi.onDemand(SpeakerDao.class)).to(SpeakerDao.class);
             	bind(jdbi.onDemand(PresentationDao.class)).to(PresentationDao.class);
+            	bind(jdbi.onDemand(ProposalDao.class)).to(ProposalDao.class);
             	bind(SpeakerService.class).to(SpeakerService.class);
             	bind(ProposalService.class).to(ProposalService.class);
             	bind(PresentationService.class).to(PresentationService.class);
+            	bind(mailService).to(MailService.class);
+            	bind(mailConfiguration).to(MailConfiguration.class);
             }
 		});
 

@@ -1,5 +1,7 @@
 package pl.devcrowd.chicken.model;
 
+import javax.validation.constraints.Size;
+
 import org.hibernate.validator.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -9,8 +11,10 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 public class Presentation {
 	private String id;
 	@NotBlank
+	@Size(max=80)
 	private String title;
 	@NotBlank
+	@Size(max=500)
 	private String description;
 	private Language language;
 	private int votes;

@@ -35,6 +35,14 @@ public class ProposalResource {
 		return Response.ok().entity(service.getProposals()).build();
 	}
 
+	@RolesAllowed("ADMIN")
+	@GET
+	@Path("/full")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getFullProposals() {
+		return Response.ok().entity(service.getFullProposals()).build();
+	}
+
 	@GET
 	@Path("/random")
 	@Consumes(MediaType.APPLICATION_JSON)

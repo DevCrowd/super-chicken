@@ -27,6 +27,14 @@ public class SpeakerResource {
 
 	@RolesAllowed("ADMIN")
 	@GET
+	@Path("/full")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getFullSpeakers() {
+		return Response.ok().entity(service.getFullSpeakers()).build();
+	}
+
+	@RolesAllowed("ADMIN")
+	@GET
 	@Path("/selected")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getSelectedProposals(@QueryParam("count") @DefaultValue("10") int count) {
