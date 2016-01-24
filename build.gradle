@@ -22,10 +22,6 @@ repositories {
     mavenCentral()
 }
 
-jar {
-    baseName = 'super-chicken'
-}
-
 dependencies {
 	compile group: 'io.dropwizard', name: 'dropwizard-core', version: '0.9.1'
 	compile group: 'io.dropwizard', name: 'dropwizard-jdbi', version: '0.9.1'
@@ -54,7 +50,17 @@ task wrapper(type: Wrapper) {
 }
 
 jar {
+    baseName = 'super-chicken'
     manifest {
         attributes 'Main-Class': 'pl.devcrowd.chicken.SuperChicken'
     }
+}
+
+shadowJar {
+    baseName = 'super-chicken'
+    version = ''
+    classifier = 'all'
+    mergeServiceFiles()
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
 }
