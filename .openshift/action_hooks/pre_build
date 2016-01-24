@@ -9,7 +9,7 @@ then
     rm -f gradle-2.6-bin.zip
 fi
 
-if [ ! -d $OPENSHIFT_DATA_DIR/jdk-8u5-linux-x64 ]
+if [ ! -d $OPENSHIFT_DATA_DIR/jdk1.8.0_05 ]
 then
     cd $OPENSHIFT_DATA_DIR
 

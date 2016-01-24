@@ -22,6 +22,10 @@ repositories {
     mavenCentral()
 }
 
+jar {
+    baseName = 'super-chicken'
+}
+
 dependencies {
 	compile group: 'io.dropwizard', name: 'dropwizard-core', version: '0.9.1'
 	compile group: 'io.dropwizard', name: 'dropwizard-jdbi', version: '0.9.1'
