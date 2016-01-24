@@ -18,4 +18,4 @@ sed -i 's/OPENSHIFT_POSTGRESQL_DB_USERNAME/'"$OPENSHIFT_POSTGRESQL_DB_USERNAME"'
 sed -i 's/OPENSHIFT_POSTGRESQL_DB_PASSWORD/'"$OPENSHIFT_POSTGRESQL_DB_PASSWORD"'/' env.yml
 sed -i 's/OPENSHIFT_POSTGRESQL_DB_URL/'"$OPENSHIFT_APP_DNS"'/' env.yml
 
-java -jar build/libs/super-chicken-all.jar server env.yml &
+java -jar build/libs/super-chicken-all.jar server env.yml 
