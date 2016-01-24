@@ -54,4 +54,3 @@ jar {
         attributes 'Main-Class': 'pl.devcrowd.chicken.SuperChicken'
     }
 }
-
