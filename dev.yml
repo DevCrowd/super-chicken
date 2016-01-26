@@ -18,3 +18,4 @@ mail:
   port: 465
   registrationMailTemplate: "Cześć %s,<br><br>Dziękujemy za zgłoszenie prezentacji.<br>Twoje zgłoszenie zostało dodane do listy zgłoszonych prezentacji i weźmie udział w głosowaniu.<br><br>Zespół DevCrowd"
   registrationMailSubject: "C4P DevCrowd"
+  copy: c4p@devcrowd.pl

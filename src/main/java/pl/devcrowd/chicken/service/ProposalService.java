@@ -19,7 +19,21 @@ import pl.devcrowd.chicken.model.Proposal;
 import pl.devcrowd.chicken.model.Speaker;
 
 public class ProposalService {
-	@Inject
+    private static final String SPEAKER = "Speaker:";
+	private static final String TEE_SIZE = "Tee Size: ";
+    private static final String ORIGIN = "Origin: ";
+    private static final String EMAIL = "Email: ";
+    private static final String LASTNAME = "Lastname: ";
+    private static final String FIRSTNAME = "Firstname: ";
+    private static final String PRESENTATION = "Presentation:";
+    private static final String LANG = "Lang: ";
+    private static final String DESC = "Desc: ";
+    private static final String TITLE = "Title: ";
+    private static final String MAIL_NEW_LINE = "<br>";
+    private static final String MAIL_ITEM_SEPARATOR = "======================================================";
+    private static final String PROPOSAL_COPY_MAIL_SUBJECT = "Proposal Copy";
+
+    @Inject
 	private SpeakerDao speakerDao;
 	@Inject
 	private PresentationDao presentationDao;
@@ -27,13 +41,16 @@ public class ProposalService {
 	private ProposalDao proposalDao;
 	@Inject
 	private MailService mailService;
+
 	private String registrationMailTemplate;
 	private String registrationMailSubject;
+    private String copyAddress;
 
 	@Inject
 	public ProposalService(MailConfiguration mailConfiguration) {
 		this.registrationMailTemplate = mailConfiguration.getRegistrationMailTemplate();
 		this.registrationMailSubject = mailConfiguration.getRegistrationMailSubject();
+		this.copyAddress = mailConfiguration.getCopy();
 	}
 
 	@Transaction
@@ -43,6 +60,7 @@ public class ProposalService {
 		List<Presentation> presentations = proposal.getPresentations().stream().map((p) -> addPresentation(p, speakers, proposalId)).collect(Collectors.toList());
 
 		sendMailToSpeakers(speakers);
+		sendCopyInMail(proposal);
 
 		return new Proposal(speakers, presentations);
 	}
@@ -106,4 +124,32 @@ public class ProposalService {
 	private void sendRegistrationMail(String name, String email) {
 		mailService.sendMail(email, registrationMailSubject, String.format(registrationMailTemplate, name));
 	}
+
+	private void sendCopyInMail(Proposal proposal) {
+	    StringBuilder mail = new StringBuilder();
+
+	    proposal.getSpeakers().forEach(s -> addSpeakerToMailCopy(mail, s));
+	    proposal.getPresentations().forEach(p -> addPresentationToMailCopy(mail, p));
+
+	    mailService.sendMail(copyAddress, PROPOSAL_COPY_MAIL_SUBJECT, mail.toString());
+	}
+
+    private void addPresentationToMailCopy(StringBuilder mail, Presentation p) {
+        mail.append(PRESENTATION).append(MAIL_NEW_LINE)
+            .append(TITLE).append(p.getTitle()).append(MAIL_NEW_LINE)
+            .append(DESC).append(p.getDescription()).append(MAIL_NEW_LINE)
+            .append(LANG).append(p.getLanguage() != null ? p.getLanguage().value() : "").append(MAIL_NEW_LINE)
+            .append(MAIL_ITEM_SEPARATOR).append(MAIL_NEW_LINE);
+    }
+
+    private void addSpeakerToMailCopy(StringBuilder mail, Speaker s) {
+        mail.append(SPEAKER).append(MAIL_NEW_LINE)
+        .append(FIRSTNAME).append(s.getFirstname()).append(MAIL_NEW_LINE)
+        .append(LASTNAME).append(s.getLastname()).append(MAIL_NEW_LINE)
+        .append(EMAIL).append(s.getEmail()).append(MAIL_NEW_LINE)
+        .append(DESC).append(s.getDescription()).append(MAIL_NEW_LINE)
+        .append(ORIGIN).append(s.getOrigin()).append(MAIL_NEW_LINE)
+        .append(TEE_SIZE).append(s.getTeeSize() != null ? s.getTeeSize().value() : "").append(MAIL_NEW_LINE)
+        .append(MAIL_ITEM_SEPARATOR).append(MAIL_NEW_LINE);
+    }
 }

@@ -9,6 +9,8 @@ public class MailConfiguration {
 
 	private String registrationMailSubject;
 
+	private String copy;
+
 	public String getHost() {
 		return host;
 	}
@@ -40,4 +42,12 @@ public class MailConfiguration {
 	public void setRegistrationMailSubject(String registrationMailSubject) {
 		this.registrationMailSubject = registrationMailSubject;
 	}
+
+    public String getCopy() {
+        return copy;
+    }
+
+    public void setCopy(String copy) {
+        this.copy = copy;
+    }
 }
