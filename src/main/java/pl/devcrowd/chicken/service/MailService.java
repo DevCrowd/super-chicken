@@ -35,9 +35,8 @@ public class MailService {
 			email.setCharset("utf-8");
 
 			email.send();
-		}
-		catch (EmailException e) {
-			LOGGER.error("Failed to send maili", e);
+		} catch (EmailException e) {
+			LOGGER.error("Failed to send mail", e);
 		}
 	}
 }
