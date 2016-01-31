@@ -32,6 +32,7 @@ public class MailService {
 			email.setSubject(subject);
 			email.setHtmlMsg(message);
 			email.addTo(emailAddress);
+			email.setCharset("utf-8");
 
 			email.send();
 		}
