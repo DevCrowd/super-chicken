@@ -9,7 +9,7 @@ public class MailConfiguration {
 
 	private String registrationMailSubject;
 
-	private String copy;
+	private String fromAddress;
 
 	public String getHost() {
 		return host;
@@ -43,11 +43,11 @@ public class MailConfiguration {
 		this.registrationMailSubject = registrationMailSubject;
 	}
 
-    public String getCopy() {
-        return copy;
+    public String getFromAddress() {
+        return fromAddress;
     }
 
-    public void setCopy(String copy) {
-        this.copy = copy;
+    public void setFromAddress(String fromAddress) {
+        this.fromAddress = fromAddress;
     }
 }

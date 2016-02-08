@@ -47,7 +47,7 @@ public class SuperChicken extends Application<SuperChickenConfiguration> {
 
 		MailConfiguration mailConfiguration = configuration.getMail();
 		MailService mailService = new MailService(mailConfiguration.getHost(), mailConfiguration.getPort(),
-				System.getenv().getOrDefault("MAIL_SRV_USR", ""), System.getenv().getOrDefault("MAIL_SRV_PSSWD", ""));
+				System.getenv().getOrDefault("MAIL_SRV_USR", ""), System.getenv().getOrDefault("MAIL_SRV_PSSWD", ""), mailConfiguration.getFromAddress());
 
 		environment.jersey().register(new AbstractBinder() {
             @Override

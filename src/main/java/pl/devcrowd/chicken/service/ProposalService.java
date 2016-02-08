@@ -50,7 +50,7 @@ public class ProposalService {
     public ProposalService(MailConfiguration mailConfiguration) {
         this.registrationMailTemplate = mailConfiguration.getRegistrationMailTemplate();
         this.registrationMailSubject = mailConfiguration.getRegistrationMailSubject();
-        this.copyAddress = mailConfiguration.getCopy();
+        this.copyAddress = mailConfiguration.getFromAddress();
     }
 
     @Transaction

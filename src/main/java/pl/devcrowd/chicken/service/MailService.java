@@ -12,12 +12,14 @@ public class MailService {
 	private int port;
 	private String user;
 	private String password;
+    private String fromAddress;
 
-	public MailService(String host, int port, String user, String password) {
+	public MailService(String host, int port, String user, String password, String fromAddress) {
 		this.host = host;
 		this.port = port;
 		this.user = user;
 		this.password = password;
+        this.fromAddress = fromAddress;
 	}
 
 	public void sendMail(String emailAddress, String subject, String message) {
@@ -28,7 +30,7 @@ public class MailService {
 			email.setSmtpPort(port);
 			email.setAuthenticator(new DefaultAuthenticator(user, password));
 			email.setSSLOnConnect(true);
-			email.setFrom("c4p@devcrowd.pl");
+			email.setFrom(fromAddress);
 			email.setSubject(subject);
 			email.setHtmlMsg(message);
 			email.addTo(emailAddress);
