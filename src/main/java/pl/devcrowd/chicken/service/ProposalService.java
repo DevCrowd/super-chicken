@@ -1,10 +1,15 @@
 package pl.devcrowd.chicken.service;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 
 import org.skife.jdbi.v2.TransactionIsolationLevel;
@@ -17,6 +22,8 @@ import pl.devcrowd.chicken.dao.SpeakerDao;
 import pl.devcrowd.chicken.model.Presentation;
 import pl.devcrowd.chicken.model.Proposal;
 import pl.devcrowd.chicken.model.Speaker;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 public class ProposalService {
     private static final String SPEAKER = "Speaker:";
@@ -99,6 +106,14 @@ public class ProposalService {
                 .collect(Collectors.toList());
     }
 
+    @Transaction(TransactionIsolationLevel.REPEATABLE_READ)
+    public Proposal getProposalByPropositionId(String id) {
+        Presentation presentation = presentationDao.getPresentationById(id);
+        List<Speaker> speakers = speakerDao.getSimpleSpeakersForPresentation(presentation.getId());
+
+        return new Proposal(resizeSpeakersPicture(speakers), Arrays.asList(presentation));
+    }
+
     private Speaker addSpeaker(Speaker speaker) {
         speaker.setId(UUID.randomUUID().toString());
 
@@ -150,5 +165,38 @@ public class ProposalService {
                 .append(s.getOrigin()).append(MAIL_NEW_LINE).append(TEE_SIZE)
                 .append(s.getTeeSize() != null ? s.getTeeSize().value() : "").append(MAIL_NEW_LINE)
                 .append(MAIL_ITEM_SEPARATOR).append(MAIL_NEW_LINE);
+    }
+
+    private List<Speaker> resizeSpeakersPicture(List<Speaker> speakers) {
+        return speakers.stream().map(this::resizeSpeakerPicture).collect(Collectors.toList());
+    }
+
+    private Speaker resizeSpeakerPicture(Speaker speaker) {
+        if (speaker.getPicture() != null && !speaker.getPicture().isEmpty()) {
+            speaker.setPicture(resizeImage(200, speaker.getPicture()));
+        }
+
+        return speaker;
+    }
+
+    private String resizeImage(int defaultHeight, String inputImage) {
+        String result = null;
+
+        try (ByteArrayInputStream inputImageInputStream = new ByteArrayInputStream(new BASE64Decoder().decodeBuffer(inputImage))) {
+            BufferedImage bufferedInputImage = ImageIO.read(inputImageInputStream);
+            Image scaledInstance = bufferedInputImage.getScaledInstance((defaultHeight*bufferedInputImage.getWidth()) / bufferedInputImage.getHeight(), defaultHeight, BufferedImage.SCALE_FAST);
+            BufferedImage outputImage = new BufferedImage(scaledInstance.getWidth(null), scaledInstance.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            outputImage.getGraphics().drawImage(scaledInstance, 0, 0 , null);
+
+            try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+                ImageIO.write(outputImage, "png", byteArrayOutputStream);
+
+                result = new BASE64Encoder().encode(byteArrayOutputStream.toByteArray());
+            }
+        } catch (Exception e) {
+            result = inputImage;
+        }
+
+        return result;
     }
 }

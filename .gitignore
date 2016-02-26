@@ -4,3 +4,4 @@
 .gradle/wrapper/
 bin/
 build/
+logs/

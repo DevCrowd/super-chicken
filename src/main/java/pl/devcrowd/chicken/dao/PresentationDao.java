@@ -21,6 +21,10 @@ public interface PresentationDao {
 	@Mapper(PresentationMapper.class)
 	List<Presentation> getPresentations();
 
+	@SqlQuery("select id, title from presentations")
+    @Mapper(PresentationSimpleMapper.class)
+    List<Presentation> getSimplePresentations();
+
 	@SqlQuery("select id, title, description, language from presentations where id = :id")
 	@Mapper(PresentationMapper.class)
 	Presentation getPresentationById(@Bind("id") String id);
@@ -43,8 +47,8 @@ public interface PresentationDao {
 	@Mapper(PresentationWithVotesMapper.class)
 	List<Presentation> getSelectedPresentations(@Bind("count") int count);
 
-	@SqlCall("vote(:id, :vote)")
-	void vote(String id, String vote);
+	@SqlCall("select vote(:id, :vote)")
+	void vote(@Bind("id") String id, @Bind("vote") int vote);
 
 	@SqlQuery("select count(*) from presentations")
 	int getPresentationsCount();

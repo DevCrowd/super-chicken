@@ -91,20 +91,4 @@ public class Speaker {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public static enum TeeSize {
-		XS("XS"),
-		S("S"),
-		M("M"),
-		L("L"),
-		XL("XL"),
-		XXL("XXL");
-		private String value;
-		private TeeSize(String value) {
-			this.value = value;
-		}
-		public String value() {
-			return value;
-		}
-	}
 }

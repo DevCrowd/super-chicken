@@ -1,5 +1,6 @@
 package pl.devcrowd.chicken.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -11,29 +12,19 @@ public class PresentationService {
 	@Inject
 	private PresentationDao dao;
 
-	public void vote(String id, String vote) {
-		if (isProperValue(vote)) {
-			dao.vote(id, vote);
-		} else {
-			throw new IllegalArgumentException("Unsupported value");
-		}
-	}
-
 	public List<Presentation> getFullPresentations() {
 		return dao.getFullPresentations();
 	}
 
-	private boolean isProperValue(String vote) {
-		try {
-			if (Math.abs(new Integer(vote)) == 1) {
-				return true;
-			}
+	public List<Presentation> getPresentations() {
+        return dao.getPresentations();
+    }
 
-			return false;
-		} catch (NumberFormatException e) {
-			return false;
-		}
-	}
+	public List<Presentation> getSimplePresentations() {
+	    List<Presentation> presentations = dao.getSimplePresentations();
+        Collections.shuffle(presentations);
+        return presentations;
+    }
 
 	public int getPresentationsCount() {
 		return dao.getPresentationsCount();

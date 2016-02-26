@@ -2,4 +2,33 @@
     <changeSet id="speaker" author="spc">
         <sqlFile path="db/create-schema.sql" splitStatements="false" />
     </changeSet>
+    <changeSet id="participants" author="spc">
+        <sql>
+        create table participants(
+		    id VARCHAR(50) PRIMARY KEY,
+		    name VARCHAR(30) NOT NULL,
+		    surname VARCHAR(30) NOT NULL,
+		    email VARCHAR(50) NOT NULL,
+		    voted BOOLEAN,
+		    attended BOOLEAN,
+		    tee_size VARCHAR(3),
+		    origin VARCHAR(100)
+		);
+        </sql>
+    </changeSet>
+    <changeSet id="vote-fix" author="spc" >
+        <sql splitStatements="false">
+            CREATE OR REPLACE FUNCTION vote(in varchar, in int) RETURNS integer AS $$
+			BEGIN
+			    IF NOT EXISTS (SELECT 1 FROM votes WHERE presentation_id = $1) THEN
+			        INSERT INTO votes VALUES ($1, $2);
+			    ELSE
+			       UPDATE votes SET votes = votes + $2 WHERE presentation_id = $1;
+			    END IF;
+			
+			    RETURN null;
+			END;
+			$$ LANGUAGE plpgsql;
+        </sql>
+    </changeSet>
 </databaseChangeLog>

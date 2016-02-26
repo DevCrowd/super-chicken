@@ -7,7 +7,7 @@ import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
 import pl.devcrowd.chicken.model.Speaker;
-import pl.devcrowd.chicken.model.Speaker.TeeSize;
+import pl.devcrowd.chicken.model.TeeSize;
 
 public class SpeakerWithAllDataMapper implements ResultSetMapper<Speaker> {
 	@Override

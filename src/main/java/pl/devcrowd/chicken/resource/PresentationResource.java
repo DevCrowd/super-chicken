@@ -3,11 +3,11 @@ package pl.devcrowd.chicken.resource;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -19,14 +19,15 @@ public class PresentationResource {
 	@Inject
 	private PresentationService service;
 
-	@POST
-	@Path("/{id}/votes")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addVote(@PathParam("id") String id, String vote) {
-		service.vote(id, vote);
+    @GET
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getPresentations(@QueryParam("mode") @DefaultValue("0") int mode) {
+        if (mode == 1) {
+            return Response.ok(service.getSimplePresentations()).build();
+        }
 
-		return Response.ok().build();
-	}
+        return Response.ok(service.getPresentations()).build();
+    }
 
 	@RolesAllowed("ADMIN")
 	@GET

@@ -17,6 +17,7 @@ import io.dropwizard.jdbi.DBIFactory;
 import io.dropwizard.setup.Environment;
 import pl.devcrowd.chicken.configuration.MailConfiguration;
 import pl.devcrowd.chicken.configuration.SuperChickenConfiguration;
+import pl.devcrowd.chicken.dao.ParticipantDao;
 import pl.devcrowd.chicken.dao.PresentationDao;
 import pl.devcrowd.chicken.dao.ProposalDao;
 import pl.devcrowd.chicken.dao.SpeakerDao;
@@ -24,6 +25,7 @@ import pl.devcrowd.chicken.security.SimpleAuthenticator;
 import pl.devcrowd.chicken.security.SimpleAuthorizer;
 import pl.devcrowd.chicken.security.User;
 import pl.devcrowd.chicken.service.MailService;
+import pl.devcrowd.chicken.service.ParticipantService;
 import pl.devcrowd.chicken.service.PresentationService;
 import pl.devcrowd.chicken.service.ProposalService;
 import pl.devcrowd.chicken.service.SpeakerService;
@@ -55,16 +57,18 @@ public class SuperChicken extends Application<SuperChickenConfiguration> {
             	bind(jdbi.onDemand(SpeakerDao.class)).to(SpeakerDao.class);
             	bind(jdbi.onDemand(PresentationDao.class)).to(PresentationDao.class);
             	bind(jdbi.onDemand(ProposalDao.class)).to(ProposalDao.class);
+            	bind(jdbi.onDemand(ParticipantDao.class)).to(ParticipantDao.class);
             	bind(SpeakerService.class).to(SpeakerService.class);
             	bind(ProposalService.class).to(ProposalService.class);
             	bind(PresentationService.class).to(PresentationService.class);
+            	bind(ParticipantService.class).to(ParticipantService.class);
+            	bind(configuration).to(SuperChickenConfiguration.class);
             	bind(mailService).to(MailService.class);
             	bind(mailConfiguration).to(MailConfiguration.class);
             }
 		});
 
         configureCrossOriginFilter(environment.servlets().addFilter("CORS", CrossOriginFilter.class));
-
         configureBasicSecurity(environment);
 	}
 

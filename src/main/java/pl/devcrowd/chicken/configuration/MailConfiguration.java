@@ -2,13 +2,11 @@ package pl.devcrowd.chicken.configuration;
 
 public class MailConfiguration {
 	private String host;
-
 	private int port;
-
 	private String registrationMailTemplate;
-
 	private String registrationMailSubject;
-
+	private String participantRegistrationMailTemplate;
+    private String participantRegistrationMailSubject;
 	private String fromAddress;
 
 	public String getHost() {
@@ -42,6 +40,22 @@ public class MailConfiguration {
 	public void setRegistrationMailSubject(String registrationMailSubject) {
 		this.registrationMailSubject = registrationMailSubject;
 	}
+
+    public String getParticipantRegistrationMailTemplate() {
+        return participantRegistrationMailTemplate;
+    }
+
+    public void setParticipantRegistrationMailTemplate(String participantRegistrationMailTemplate) {
+        this.participantRegistrationMailTemplate = participantRegistrationMailTemplate;
+    }
+
+    public String getParticipantRegistrationMailSubject() {
+        return participantRegistrationMailSubject;
+    }
+
+    public void setParticipantRegistrationMailSubject(String participantRegistrationMailSubject) {
+        this.participantRegistrationMailSubject = participantRegistrationMailSubject;
+    }
 
     public String getFromAddress() {
         return fromAddress;

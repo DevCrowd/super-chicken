@@ -35,6 +35,20 @@ public class ProposalResource {
 		return Response.ok().entity(service.getProposals()).build();
 	}
 
+	@GET
+    @Path("/presentations/{id}")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response getProposalByPresentationId(@PathParam("id") String id) {
+        return Response.ok().entity(service.getProposalByPropositionId(id)).build();
+    }
+
+	@GET
+	@Path("/random")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response getRandomProposal() {
+	    return Response.ok().entity(service.getRandomProposal()).build();
+	}
+
 	@RolesAllowed("ADMIN")
 	@GET
 	@Path("/full")
@@ -43,25 +57,11 @@ public class ProposalResource {
 		return Response.ok().entity(service.getFullProposals()).build();
 	}
 
-	@GET
-	@Path("/random")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getRandomProposal() {
-		return Response.ok().entity(service.getRandomProposal()).build();
-	}
-
 	@RolesAllowed("ADMIN")
 	@GET
 	@Path("/selected")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getSelectedProposals(@QueryParam("count") @DefaultValue("10") int count) {
 		return Response.ok().entity(service.getSelectedProposals(count)).build();
-	}
-
-	@GET
-	@Path("/{id}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response getProposal(@PathParam("id") Long id) {
-		return null;
 	}
 }

@@ -12,8 +12,8 @@ public class SuperChickenConfiguration extends Configuration {
     @Valid
     @NotNull
     private DataSourceFactory database = new DataSourceFactory();
-
     private MailConfiguration mail = new MailConfiguration();
+    private int maxVotes;
 
     @JsonProperty("database")
     public void setDataSourceFactory(DataSourceFactory factory) {
@@ -32,4 +32,12 @@ public class SuperChickenConfiguration extends Configuration {
 	public void setMail(MailConfiguration mail) {
 		this.mail = mail;
 	}
+
+    public int getMaxVotes() {
+        return maxVotes;
+    }
+
+    public void setMaxVotes(int maxVotes) {
+        this.maxVotes = maxVotes;
+    }
 }
