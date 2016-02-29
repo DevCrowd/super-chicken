@@ -27,6 +27,11 @@ public interface SpeakerDao {
 	@Mapper(SpeakerMapper.class)
 	List<Speaker> getSimpleSpeakersForPresentation(@Bind("presentationId") String presentationId);
 
+	@SqlQuery("select id, name, surname, description from speakers where " +
+            "id = any(select speaker_id from speaker_presentation where presentation_id = :presentationId)")
+    @Mapper(SpeakerWithoutPictureMapper.class)
+    List<Speaker> getSimpleWithoutPictureSpeakersForPresentation(@Bind("presentationId") String presentationId);
+
 	@SqlQuery("select id, name, surname, email, description, picture, tee_size, origin from speakers")
 	@Mapper(SpeakerWithAllDataMapper.class)
 	List<Speaker> getSpeakers();

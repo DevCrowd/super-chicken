@@ -114,6 +114,14 @@ public class ProposalService {
         return new Proposal(resizeSpeakersPicture(speakers), Arrays.asList(presentation));
     }
 
+    @Transaction(TransactionIsolationLevel.REPEATABLE_READ)
+    public Proposal getSimpleProposalByPropositionId(String id) {
+        Presentation presentation = presentationDao.getPresentationById(id);
+        List<Speaker> speakers = speakerDao.getSimpleWithoutPictureSpeakersForPresentation(presentation.getId());
+
+        return new Proposal(speakers, Arrays.asList(presentation));
+    }
+
     private Speaker addSpeaker(Speaker speaker) {
         speaker.setId(UUID.randomUUID().toString());
 

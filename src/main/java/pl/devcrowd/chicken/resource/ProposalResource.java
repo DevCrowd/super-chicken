@@ -38,7 +38,11 @@ public class ProposalResource {
 	@GET
     @Path("/presentations/{id}")
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response getProposalByPresentationId(@PathParam("id") String id) {
+    public Response getProposalByPresentationId(@PathParam("id") String id, @QueryParam("mode") @DefaultValue("0") int mode) {
+	    if (mode == 1) {
+	        return Response.ok().entity(service.getSimpleProposalByPropositionId(id)).build();
+	    }
+
         return Response.ok().entity(service.getProposalByPropositionId(id)).build();
     }
 
