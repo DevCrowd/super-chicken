@@ -1,8 +1,14 @@
 package pl.devcrowd.chicken.service;
 
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
 
 import org.skife.jdbi.v2.TransactionIsolationLevel;
@@ -11,8 +17,12 @@ import org.skife.jdbi.v2.sqlobject.Transaction;
 import pl.devcrowd.chicken.dao.PresentationDao;
 import pl.devcrowd.chicken.dao.SpeakerDao;
 import pl.devcrowd.chicken.model.Speaker;
+import sun.misc.BASE64Decoder;
+import sun.misc.BASE64Encoder;
 
 public class SpeakerService {
+    private static final int MAX_IMAGE_BYTE_SIZE = 200 * 1024;
+
 	@Inject
 	private SpeakerDao dao;
 	@Inject
@@ -34,5 +44,60 @@ public class SpeakerService {
 			.map(p -> dao.getSpeakersForPresentation(p.getId()))
 			.flatMap(s -> s.stream())
 			.collect(Collectors.toList());
+	}
+
+	@Transaction
+    public void resizePictures(int height) {
+	    dao.getSimpleSpeakers().forEach(s -> resizePictureWithBackup(s, height));
+    }
+
+	@Transaction
+    public void restoreBackupPictures() {
+        dao.restoreBackupPictures();
+    }
+
+	private void resizePictureWithBackup(Speaker speaker, int height) {
+	    if (speaker.getPicture() == null) {
+	        return;
+	    }
+
+	    dao.savePictureBackup(speaker.getId(), speaker.getPicture());
+	    dao.saveNewPicture(speaker.getId(), resizeImage(height, speaker.getPicture()));
+	}
+
+	private String resizeImage(int defaultHeight, String inputImage) {
+	    if (inputImage == null) {
+	        return null;
+	    }
+
+	    String result = inputImage;
+
+        try (ByteArrayInputStream inputImageInputStream = new ByteArrayInputStream(new BASE64Decoder().decodeBuffer(inputImage))) {
+            BufferedImage bufferedInputImage = ImageIO.read(inputImageInputStream);
+
+            if (bufferedInputImage.getHeight() > defaultHeight && getImageSize(bufferedInputImage) > MAX_IMAGE_BYTE_SIZE) {
+                Image scaledInstance = bufferedInputImage.getScaledInstance((defaultHeight*bufferedInputImage.getWidth()) / bufferedInputImage.getHeight(), defaultHeight, BufferedImage.SCALE_SMOOTH);
+                BufferedImage outputImage = new BufferedImage(scaledInstance.getWidth(null), scaledInstance.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+                outputImage.getGraphics().drawImage(scaledInstance, 0, 0 , null);
+
+                try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
+                    ImageIO.write(outputImage, "png", byteArrayOutputStream);
+
+                    result = new BASE64Encoder().encode(byteArrayOutputStream.toByteArray());
+                }
+            }
+        } catch (Exception e) {
+            result = inputImage;
+        }
+
+        return result;
+    }
+
+	private int getImageSize(BufferedImage image) throws IOException {
+	    try (ByteArrayOutputStream tmp = new ByteArrayOutputStream()) {
+            ImageIO.write(image, "png", tmp);
+
+            return tmp.size();
+	    }
 	}
 }

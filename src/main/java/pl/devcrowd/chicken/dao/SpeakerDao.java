@@ -44,4 +44,16 @@ public interface SpeakerDao {
 			"id = any(select speaker_id from speaker_presentation where presentation_id = :presentationId)")
 	@Mapper(SpeakerWithAllDataMapper.class)
 	List<Speaker> getSpeakersForPresentation(@Bind("presentationId") String presentationId);
+
+	@SqlUpdate("insert into speaker_picture_backup values (:id, :picture)")
+    void savePictureBackup(@Bind("id") String id, @Bind("picture") String picture);
+
+	@SqlUpdate("UPDATE speakers s \n" +
+	        "SET picture = b.picture\n" +
+	        "FROM speaker_picture_backup b \n" +
+	        "WHERE s.id = b.speaker_id")
+	void restoreBackupPictures();
+
+	@SqlUpdate("update speakers set picture = :picture where id = :id")
+    void saveNewPicture(@Bind("id") String id, @Bind("picture") String picture);
 }

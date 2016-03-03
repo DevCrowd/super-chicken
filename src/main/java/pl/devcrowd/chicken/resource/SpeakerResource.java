@@ -2,7 +2,6 @@ package pl.devcrowd.chicken.resource;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -20,7 +19,6 @@ public class SpeakerResource {
 	private SpeakerService service;
 
 	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getSpeakers() {
 		return Response.ok().entity(service.getSpeakers()).build();
 	}
@@ -28,7 +26,6 @@ public class SpeakerResource {
 	@RolesAllowed("ADMIN")
 	@GET
 	@Path("/full")
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getFullSpeakers() {
 		return Response.ok().entity(service.getFullSpeakers()).build();
 	}
@@ -36,8 +33,21 @@ public class SpeakerResource {
 	@RolesAllowed("ADMIN")
 	@GET
 	@Path("/selected")
-	@Consumes(MediaType.APPLICATION_JSON)
 	public Response getSelectedProposals(@QueryParam("count") @DefaultValue("10") int count) {
 		return Response.ok().entity(service.getSelectedSpeakers(count)).build();
 	}
+
+	@RolesAllowed("ADMIN")
+    @GET
+    @Path("/pictures/resize")
+    public void resizePictures(@QueryParam("height") @DefaultValue("250") int height) {
+        service.resizePictures(height);
+    }
+
+	@RolesAllowed("ADMIN")
+    @GET
+    @Path("/pictures/backups/restore")
+    public void restoreBackupPictures() {
+        service.restoreBackupPictures();
+    }
 }

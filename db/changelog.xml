@@ -31,4 +31,12 @@
 			$$ LANGUAGE plpgsql;
         </sql>
     </changeSet>
+    <changeSet id="picture-backup" author="spc" >
+        <sql splitStatements="false">
+            create table speaker_picture_backup(
+                speaker_id VARCHAR(50) PRIMARY KEY,
+                picture TEXT
+            );
+        </sql>
+    </changeSet>
 </databaseChangeLog>
