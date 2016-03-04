@@ -4,6 +4,7 @@ import javax.annotation.security.RolesAllowed;
 import javax.inject.Inject;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -38,14 +39,14 @@ public class SpeakerResource {
 	}
 
 	@RolesAllowed("ADMIN")
-    @GET
+    @POST
     @Path("/pictures/resize")
     public void resizePictures(@QueryParam("height") @DefaultValue("250") int height) {
         service.resizePictures(height);
     }
 
 	@RolesAllowed("ADMIN")
-    @GET
+    @POST
     @Path("/pictures/backups/restore")
     public void restoreBackupPictures() {
         service.restoreBackupPictures();
