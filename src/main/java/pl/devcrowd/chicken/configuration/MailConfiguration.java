@@ -8,6 +8,7 @@ public class MailConfiguration {
 	private String participantRegistrationMailTemplate;
     private String participantRegistrationMailSubject;
 	private String fromAddress;
+	private String participantRegistrationFromAddress;
 
 	public String getHost() {
 		return host;
@@ -63,5 +64,13 @@ public class MailConfiguration {
 
     public void setFromAddress(String fromAddress) {
         this.fromAddress = fromAddress;
+    }
+
+    public String getParticipantRegistrationFromAddress() {
+        return participantRegistrationFromAddress;
+    }
+
+    public void setParticipantRegistrationFromAddress(String participantRegistrationFromAddress) {
+        this.participantRegistrationFromAddress = participantRegistrationFromAddress;
     }
 }

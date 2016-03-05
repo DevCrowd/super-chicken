@@ -12,17 +12,15 @@ public class MailService {
 	private int port;
 	private String user;
 	private String password;
-    private String fromAddress;
 
-	public MailService(String host, int port, String user, String password, String fromAddress) {
+	public MailService(String host, int port, String user, String password) {
 		this.host = host;
 		this.port = port;
 		this.user = user;
 		this.password = password;
-        this.fromAddress = fromAddress;
 	}
 
-	public void sendMail(String emailAddress, String subject, String message) {
+	public void sendMail(String emailAddress, String subject, String message, String fromAddress) {
 		try {
 			HtmlEmail email = new HtmlEmail();
 

@@ -45,12 +45,14 @@ public class ProposalService {
     private String registrationMailTemplate;
     private String registrationMailSubject;
     private String copyAddress;
+    private String fromAddress;
 
     @Inject
     public ProposalService(MailConfiguration mailConfiguration) {
         this.registrationMailTemplate = mailConfiguration.getRegistrationMailTemplate();
         this.registrationMailSubject = mailConfiguration.getRegistrationMailSubject();
         this.copyAddress = mailConfiguration.getFromAddress();
+        this.fromAddress = mailConfiguration.getFromAddress();
     }
 
     @Transaction
@@ -140,7 +142,7 @@ public class ProposalService {
     }
 
     private void sendRegistrationMail(String name, String email) {
-        mailService.sendMail(email, registrationMailSubject, String.format(registrationMailTemplate, name));
+        mailService.sendMail(email, registrationMailSubject, String.format(registrationMailTemplate, name), fromAddress);
     }
 
     private void sendCopyInMail(Proposal proposal) {
@@ -149,7 +151,7 @@ public class ProposalService {
         proposal.getSpeakers().forEach(s -> addSpeakerToMailCopy(mail, s));
         proposal.getPresentations().forEach(p -> addPresentationToMailCopy(mail, p));
 
-        mailService.sendMail(copyAddress, PROPOSAL_COPY_MAIL_SUBJECT, mail.toString());
+        mailService.sendMail(copyAddress, PROPOSAL_COPY_MAIL_SUBJECT, mail.toString(), fromAddress);
     }
 
     private void addPresentationToMailCopy(StringBuilder mail, Presentation p) {

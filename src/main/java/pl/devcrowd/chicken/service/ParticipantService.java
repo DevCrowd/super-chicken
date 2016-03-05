@@ -63,6 +63,7 @@ public class ParticipantService {
 
     private void sendRegistrationMail(String name, String email) {
         mailService.sendMail(email, configuration.getMail().getParticipantRegistrationMailSubject(),
-                String.format(configuration.getMail().getParticipantRegistrationMailTemplate(), name));
+                String.format(configuration.getMail().getParticipantRegistrationMailTemplate(), name),
+                configuration.getMail().getParticipantRegistrationFromAddress());
     }
 }
