@@ -17,5 +17,6 @@ sed -i 's/OPENSHIFT_DIY_PORT/'"$OPENSHIFT_DIY_PORT"'/' env.yml
 sed -i 's/OPENSHIFT_POSTGRESQL_DB_USERNAME/'"$OPENSHIFT_POSTGRESQL_DB_USERNAME"'/' env.yml
 sed -i 's/OPENSHIFT_POSTGRESQL_DB_PASSWORD/'"$OPENSHIFT_POSTGRESQL_DB_PASSWORD"'/' env.yml
 sed -i 's/OPENSHIFT_POSTGRESQL_DB_URL/'"$OPENSHIFT_POSTGRESQL_DB_HOST"'/' env.yml
+sed -i 's/PGDATABASE/'"$PGDATABASE"'/' env.yml
 
 java -jar build/libs/super-chicken-all.jar server env.yml 
