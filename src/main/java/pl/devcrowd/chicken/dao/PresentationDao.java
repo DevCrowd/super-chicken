@@ -30,7 +30,7 @@ public interface PresentationDao {
 	Presentation getPresentationById(@Bind("id") String id);
 
 	@SqlQuery("select distinct p.id as id, p.title as title, p.description as description, p.language as language, v.votes as votes from presentations p " +
-			"left outer join votes v on p.id = v.presentation_id order by v.votes")
+			"left outer join votes v on p.id = v.presentation_id order by v.votes desc")
 	@Mapper(PresentationWithVotesMapper.class)
 	List<Presentation> getFullPresentations();
 
@@ -43,7 +43,7 @@ public interface PresentationDao {
 	Presentation getRandomPresentation();
 
 	@SqlQuery("select distinct p.id as id, p.title as title, p.description as description, p.language as language, v.votes as votes from presentations p " +
-			"left outer join votes v on p.id = v.presentation_id order by v.votes limit :count")
+			"left outer join votes v on p.id = v.presentation_id order by v.votes desc limit :count")
 	@Mapper(PresentationWithVotesMapper.class)
 	List<Presentation> getSelectedPresentations(@Bind("count") int count);
 
