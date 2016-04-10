@@ -39,7 +39,7 @@
             );
         </sql>
     </changeSet>
-    <changeSet id="picture-backup" author="spc" >
+    <changeSet id="confirmation" author="spc" >
         <sql splitStatements="false">
             alter table participants add column confirmed BOOLEAN;
             UPDATE participants SET confirmed = 'f';
