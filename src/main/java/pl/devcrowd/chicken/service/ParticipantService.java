@@ -9,6 +9,7 @@ import pl.devcrowd.chicken.configuration.SuperChickenConfiguration;
 import pl.devcrowd.chicken.dao.ParticipantDao;
 import pl.devcrowd.chicken.dao.PresentationDao;
 import pl.devcrowd.chicken.model.Participant;
+import pl.devcrowd.chicken.model.Participant.Meal;
 
 public class ParticipantService {
     private static final int SINGLE_VOTE = 1;
@@ -61,9 +62,23 @@ public class ParticipantService {
         participantDao.setAttended(id);
     }
 
+    public void confirm(String id, Meal meal) {
+        participantDao.setConfirmed(id, meal.value());
+    }
+
+    public void requestConfirmation() {
+        participantDao.getParticipants().forEach(p -> sendConfirmationMail(p.getId(), p.getFirstname(), p.getEmail()));
+    }
+
     private void sendRegistrationMail(String name, String email) {
         mailService.sendMail(email, configuration.getMail().getParticipantRegistrationMailSubject(),
                 String.format(configuration.getMail().getParticipantRegistrationMailTemplate(), name),
+                configuration.getMail().getParticipantRegistrationFromAddress());
+    }
+
+    private void sendConfirmationMail(String id, String name, String email) {
+        mailService.sendMail(email, configuration.getMail().getParticipantConfirmationMailSubject(),
+                String.format(configuration.getMail().getParticipantConfirmationMailTemplate(), name, id),
                 configuration.getMail().getParticipantRegistrationFromAddress());
     }
 }

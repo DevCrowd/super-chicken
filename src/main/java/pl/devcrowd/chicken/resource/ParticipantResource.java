@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import pl.devcrowd.chicken.model.Participant;
+import pl.devcrowd.chicken.model.Participant.Meal;
 import pl.devcrowd.chicken.service.ParticipantService;
 
 @Path("/participants")
@@ -33,6 +34,24 @@ public class ParticipantResource {
     @Consumes(MediaType.APPLICATION_JSON)
     public Response vote(@PathParam("id") String id, List<String> presentationsIds) {
         service.vote(id, presentationsIds);
+
+        return Response.ok().build();
+    }
+
+    @POST
+    @Path("/{id}/confirmed")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response confirm(@PathParam("id") String id, Meal meal) {
+        service.confirm(id, meal);
+
+        return Response.ok().build();
+    }
+
+    @POST
+    @Path("/request/confirmed")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public Response requestConfirmation() {
+        service.requestConfirmation();
 
         return Response.ok().build();
     }

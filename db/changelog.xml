@@ -39,4 +39,12 @@
             );
         </sql>
     </changeSet>
+    <changeSet id="picture-backup" author="spc" >
+        <sql splitStatements="false">
+            alter table participants add column confirmed BOOLEAN;
+            UPDATE participants SET confirmed = 'f';
+            alter table participants add column meal VARCHAR(7);
+            update participants SET meal = 'NONE';
+        </sql>
+    </changeSet>
 </databaseChangeLog>

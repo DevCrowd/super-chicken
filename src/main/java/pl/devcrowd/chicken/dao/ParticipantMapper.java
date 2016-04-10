@@ -7,6 +7,7 @@ import org.skife.jdbi.v2.StatementContext;
 import org.skife.jdbi.v2.tweak.ResultSetMapper;
 
 import pl.devcrowd.chicken.model.Participant;
+import pl.devcrowd.chicken.model.Participant.Meal;
 import pl.devcrowd.chicken.model.TeeSize;
 
 public class ParticipantMapper implements ResultSetMapper<Participant> {
@@ -22,6 +23,8 @@ public class ParticipantMapper implements ResultSetMapper<Participant> {
         result.setTeeSize(TeeSize.valueOf(r.getString("tee_size")));
         result.setAttended(r.getBoolean("attended"));
         result.setVoted(r.getBoolean("voted"));
+        result.setConfirmed(r.getBoolean("confirmed"));
+        result.setMeal(Meal.valueOf(r.getString("meal")));
 
 		return result;
 	}

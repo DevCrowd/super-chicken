@@ -7,6 +7,8 @@ public class MailConfiguration {
 	private String registrationMailSubject;
 	private String participantRegistrationMailTemplate;
     private String participantRegistrationMailSubject;
+    private String participantConfirmationMailTemplate;
+    private String participantConfirmationMailSubject;
 	private String fromAddress;
 	private String participantRegistrationFromAddress;
 
@@ -72,5 +74,21 @@ public class MailConfiguration {
 
     public void setParticipantRegistrationFromAddress(String participantRegistrationFromAddress) {
         this.participantRegistrationFromAddress = participantRegistrationFromAddress;
+    }
+
+    public String getParticipantConfirmationMailTemplate() {
+        return participantConfirmationMailTemplate;
+    }
+
+    public void setParticipantConfirmationMailTemplate(String participantConfirmationMailTemplate) {
+        this.participantConfirmationMailTemplate = participantConfirmationMailTemplate;
+    }
+
+    public String getParticipantConfirmationMailSubject() {
+        return participantConfirmationMailSubject;
+    }
+
+    public void setParticipantConfirmationMailSubject(String participantConfirmationMailSubject) {
+        this.participantConfirmationMailSubject = participantConfirmationMailSubject;
     }
 }

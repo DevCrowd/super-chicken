@@ -14,11 +14,11 @@ public interface ParticipantDao {
     void insert(@Bind("id") String id, @Bind("name") String name, @Bind("surname") String surname, @Bind("email") String email,
             @Bind("teeSize") String teeSize, @Bind("origin") String origin, @Bind("voted") boolean voted, @Bind("attended") boolean attended);
 
-	@SqlQuery("select id, name, surname, email, tee_size, origin, attended, voted from participants order by surname")
+	@SqlQuery("select id, name, surname, email, tee_size, origin, attended, voted, confirmed, meal from participants order by surname")
 	@Mapper(ParticipantMapper.class)
 	List<Participant> getParticipants();
 
-	@SqlQuery("select id, name, surname, email, tee_size, origin, attended, voted from participants where id = :id")
+	@SqlQuery("select id, name, surname, email, tee_size, origin, attended, voted, confirmed, meal from participants where id = :id")
     @Mapper(ParticipantMapper.class)
     Participant getParticipant(@Bind("id") String id);
 
@@ -33,4 +33,7 @@ public interface ParticipantDao {
 
 	@SqlUpdate("update participants set attended = 't' where id = :id")
     void setAttended(@Bind("id") String id);
+
+	@SqlUpdate("update participants set confirmed = 't' and meal = :meal where id = :id")
+    void setConfirmed(@Bind("id") String id, @Bind("meal") String meal);
 }

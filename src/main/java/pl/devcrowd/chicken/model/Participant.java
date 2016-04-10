@@ -23,6 +23,8 @@ public class Participant {
     private String origin;
     private boolean voted;
     private boolean attended;
+    private boolean confirmed;
+    private Meal meal;
 
     public void setId(String id) {
         this.id = id;
@@ -86,5 +88,34 @@ public class Participant {
 
     public void setAttended(boolean attended) {
         this.attended = attended;
+    }
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public Meal getMeal() {
+        return meal;
+    }
+
+    public void setMeal(Meal meal) {
+        this.meal = meal;
+    }
+
+    public static enum Meal {
+        NORMAL("NORMAL"),
+        VEG("VEG"),
+        NONE("NONE");
+        private String value;
+        private Meal(String value) {
+            this.value = value;
+        }
+        public String value() {
+            return value;
+        }
     }
 }
