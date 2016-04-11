@@ -34,6 +34,6 @@ public interface ParticipantDao {
 	@SqlUpdate("update participants set attended = 't' where id = :id")
     void setAttended(@Bind("id") String id);
 
-	@SqlUpdate("update participants set confirmed = 't' and meal = :meal where id = :id")
+	@SqlUpdate("update participants set confirmed = 't', meal = :meal where id = :id")
     void setConfirmed(@Bind("id") String id, @Bind("meal") String meal);
 }
