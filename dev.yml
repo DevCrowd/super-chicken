@@ -18,7 +18,7 @@ mail:
   port: 465
   registrationMailTemplate: "Cześć %s,<br><br>Dziękujemy za zgłoszenie prezentacji.<br>Twoje zgłoszenie zostało dodane do listy zgłoszonych prezentacji i weźmie udział w głosowaniu.<br><br>Zespół DevCrowd"
   registrationMailSubject: "C4P DevCrowd"
-  participantRegistrationMailTemplate: "Cześć %s,<br><br>Dziękujemy za rejestrację i do zobacznie.<br><br>SuperChicken system i Zespół DevCrowd"
+  participantRegistrationMailTemplate: "Cześć %s,<br><br>Dziękujemy za rejestrację i do zobacznie.<br> Dla lepszej organizacji i sprawniejszej rejestracji w dniu konferencji prosilibyśmy o poświęcenie minuty w celu potwierdzenia przybycia i wyboru preferowanego posiłku pod linkiem <a href='http://devcrowd.pl/confirmation.html?id=%s#confirmation'>potwierdzenie</a><br><br>SuperChicken system i Zespół DevCrowd"
   participantRegistrationMailSubject: "C4P DevCrowd - Rejestracja"
   participantConfirmationMailTemplate: "Cześć %s,<br><br>Konferencja zbliża się wielkimi krokami. Dla lepszej organizacji i sprawniejszej rejestracji w dniu konferencji prosilibyśmy o poświęcenie minuty w celu potwierdzenia przybycia i wyboru preferowanego posiłku pod linkiem <a href='http://devcrowd.pl/confirmation.html?id=%s#confirmation'>potwierdzenie</a><br><br>SuperChicken system i Zespół DevCrowd"
   participantConfirmationMailSubject: "C4P DevCrowd - Rejestracja"

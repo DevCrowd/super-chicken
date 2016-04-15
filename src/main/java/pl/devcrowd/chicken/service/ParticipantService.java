@@ -30,7 +30,7 @@ public class ParticipantService {
 
         participant.setId(id);
 
-        sendRegistrationMail(participant.getFirstname(), participant.getEmail());
+        sendRegistrationMail(id, participant.getFirstname(), participant.getEmail());
 
         return participant;
     }
@@ -70,9 +70,9 @@ public class ParticipantService {
         participantDao.getParticipants().forEach(p -> sendConfirmationMail(p.getId(), p.getFirstname(), p.getEmail()));
     }
 
-    private void sendRegistrationMail(String name, String email) {
+    private void sendRegistrationMail(String id, String name, String email) {
         mailService.sendMail(email, configuration.getMail().getParticipantRegistrationMailSubject(),
-                String.format(configuration.getMail().getParticipantRegistrationMailTemplate(), name),
+                String.format(configuration.getMail().getParticipantRegistrationMailTemplate(), name, id),
                 configuration.getMail().getParticipantRegistrationFromAddress());
     }
 
