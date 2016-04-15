@@ -47,4 +47,10 @@
             update participants SET meal = 'NONE';
         </sql>
     </changeSet>
+    <changeSet id="default-meal" author="spc" >
+        <sql splitStatements="false">
+            alter table participants alter column meal set default 'NONE';
+            update participants SET meal = 'NONE' where meal is null;
+        </sql>
+    </changeSet>
 </databaseChangeLog>

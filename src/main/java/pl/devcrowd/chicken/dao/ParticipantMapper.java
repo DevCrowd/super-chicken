@@ -24,7 +24,11 @@ public class ParticipantMapper implements ResultSetMapper<Participant> {
         result.setAttended(r.getBoolean("attended"));
         result.setVoted(r.getBoolean("voted"));
         result.setConfirmed(r.getBoolean("confirmed"));
-        result.setMeal(Meal.valueOf(r.getString("meal")));
+        String meal = r.getString("meal");
+
+        if (meal != null) {
+            result.setMeal(Meal.valueOf(meal));
+        }
 
 		return result;
 	}
