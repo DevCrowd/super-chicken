@@ -23,7 +23,6 @@ public class ProposalResource {
 	@Inject
 	private ProposalService service;
 
-	@RolesAllowed("ADMIN")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addProposal(@Valid Proposal proposal) {

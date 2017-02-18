@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,8 +18,6 @@ import org.skife.jdbi.v2.sqlobject.Transaction;
 import pl.devcrowd.chicken.dao.PresentationDao;
 import pl.devcrowd.chicken.dao.SpeakerDao;
 import pl.devcrowd.chicken.model.Speaker;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 public class SpeakerService {
     private static final int MAX_IMAGE_BYTE_SIZE = 200 * 1024;
@@ -72,7 +71,7 @@ public class SpeakerService {
 
 	    String result = inputImage;
 
-        try (ByteArrayInputStream inputImageInputStream = new ByteArrayInputStream(new BASE64Decoder().decodeBuffer(inputImage))) {
+        try (ByteArrayInputStream inputImageInputStream = new ByteArrayInputStream(Base64.getDecoder().decode(inputImage))) {
             BufferedImage bufferedInputImage = ImageIO.read(inputImageInputStream);
 
             if (bufferedInputImage.getHeight() > defaultHeight && getImageSize(bufferedInputImage) > MAX_IMAGE_BYTE_SIZE) {
@@ -83,10 +82,10 @@ public class SpeakerService {
                 try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream()) {
                     ImageIO.write(outputImage, "png", byteArrayOutputStream);
 
-                    result = new BASE64Encoder().encode(byteArrayOutputStream.toByteArray());
+                    result = Base64.getEncoder().encodeToString(byteArrayOutputStream.toByteArray());
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             result = inputImage;
         }
 
