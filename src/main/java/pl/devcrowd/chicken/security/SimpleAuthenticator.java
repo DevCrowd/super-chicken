@@ -1,6 +1,6 @@
 package pl.devcrowd.chicken.security;
 
-import com.google.common.base.Optional;
+import java.util.Optional;
 
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.Authenticator;
@@ -15,6 +15,6 @@ public class SimpleAuthenticator implements Authenticator<BasicCredentials, User
 			return Optional.of(new User(credentials.getUsername()));
 		}
 
-		return Optional.absent();
+		return Optional.empty();
 	}
 }
