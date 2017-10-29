@@ -53,4 +53,25 @@
             update participants SET meal = 'NONE' where meal is null;
         </sql>
     </changeSet>
+    <changeSet id="create-mail-templates" author="spc" >
+        <sql splitStatements="false">
+            CREATE TYPE email_type AS ENUM ('reg', 'partReg', 'partConf');
+
+		    create table email_templates(
+			    id VARCHAR(50) PRIMARY KEY,
+			    e_type email_type NOT NULL,
+			    title VARCHAR(256) NOT NULL,
+			    template VARCHAR(4096) NOT NULL
+			);
+        </sql>
+    </changeSet>
+    <changeSet id="fill-mail-templates" author="spc" >
+        <sql splitStatements="false">
+            <![CDATA[
+            insert into email_templates values ('1', 'reg', 'C4P DevCrowd', 'Cześć %s,<br><br>Dziękujemy za zgłoszenie prezentacji.<br>Twoje zgłoszenie zostało dodane do listy zgłoszonych prezentacji i weźmie udział w głosowaniu.<br><br>Zespół DevCrowd');
+            insert into email_templates values ('2', 'partReg', 'DevCrowd - Rejestracja', 'Cześć %s,<br><br>Dziękujemy za rejestrację i do zobacznia.<br><br>SuperChicken system i Zespół DevCrowd');
+            insert into email_templates values ('3', 'partConf', 'C4P DevCrowd - Rejestracja', 'Cześć %s,<br><br>Konferencja zbliża się wielkimi krokami. Dla lepszej organizacji i sprawniejszej rejestracji w dniu konferencji prosilibyśmy o poświęcenie minuty w celu potwierdzenia przybycia i wyboru preferowanego posiłku pod linkiem <a href="http://devcrowd.pl/confirmation.html?id=%s#confirmation">potwierdzenie</a><br><br>SuperChicken system i Zespół DevCrowd');
+             ]]>
+        </sql>
+    </changeSet>
 </databaseChangeLog>
